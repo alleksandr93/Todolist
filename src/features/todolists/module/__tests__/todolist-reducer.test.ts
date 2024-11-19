@@ -5,8 +5,8 @@ import {
     removeTodolistAC,
     todolistReducer,
     updateTodolistAC
-} from './todolist-reducer';
-import {TodolistType} from '../app/App';
+} from '../todolist-reducer';
+import {TodolistType} from '../../../../app/App';
 
 let todolistId1: string
 let todolistId2: string

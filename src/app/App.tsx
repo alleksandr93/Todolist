@@ -1,13 +1,11 @@
-import './App.css';
 import {ThemeProvider} from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import {RootState} from './store';
-import {ThemeMode} from './app-reducer';
 import {getTheme} from '../common/theme/theme';
+import {Header} from '../common/components/Header/Header';
+import {Main} from './Main';
+import {useAppSelector} from '../common/hooks/useAppSelector';
+import {selectThemeMode} from './appSelectors';
 
-import {useSelector} from 'react-redux';
-import {Header} from '../Header';
-import {Main} from '../Main';
 
 export type TaskType = {
     id: string
@@ -25,10 +23,8 @@ export type TasksStateType = {
 }
 
 
-
-//Todo Пересмотреть Видео занятие
 function App() {
-    const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode)
+    const themeMode = useAppSelector(selectThemeMode)
     const theme = getTheme(themeMode)
     return (
         <div className="App">

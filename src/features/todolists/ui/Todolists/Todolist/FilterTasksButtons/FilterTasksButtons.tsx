@@ -1,10 +1,11 @@
 import React from 'react';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import {filterButtonsContainerSX} from './Todolist.styles';
 import Button from '@mui/material/Button';
-import {FilterValuesType, TodolistType} from './app/App';
-import {changeFilterAC} from './module/todolist-reducer';
-import {useAppDispatch} from './app/hooks';
+import {FilterValuesType, TodolistType} from '../../../../../../app/App';
+import {changeFilterAC} from '../../../../module/todolist-reducer';
+import {useAppDispatch} from '../../../../../../common/hooks/useAppDispatch';
+import {filterButtonsContainerSX} from './FilterTasksButtons.styles';
+
 
 type  PropsType = {
     todolist:TodolistType

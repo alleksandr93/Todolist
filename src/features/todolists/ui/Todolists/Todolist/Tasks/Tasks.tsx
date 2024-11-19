@@ -1,14 +1,17 @@
 import React from 'react';
 import List from '@mui/material/List';
-import {TodolistType} from './app/App';
-import {Task} from './Task';
-import {useAppSelector} from './app/hooks';
+import {TodolistType} from '../../../../../../app/App';
+
+import {useAppSelector} from '../../../../../../common/hooks/useAppSelector';
+import {Task} from './Task/Task';
+import {selectTasks} from '../../../../../../app/appSelectors';
+
 
 type PropsType = {
     todolist:TodolistType
 }
 export const Tasks = ({todolist}:PropsType) => {
-    const tasks = useAppSelector(state => state.tasks)
+    const tasks = useAppSelector(selectTasks)
     const allTasks=tasks[todolist.id]
     let tasksForTodolist = allTasks
     if (todolist.filter === 'active') {
@@ -23,7 +26,7 @@ export const Tasks = ({todolist}:PropsType) => {
                 tasksForTodolist.length === 0
                     ? <p>Тасок нет</p>
                     : <List>
-                        {tasksForTodolist.map(t=><Task key={t.id} task={t} todolist={todolist}/>)}
+                        {tasksForTodolist.map(t=><Task key={t.id} task={t} todolistId={todolist.id}/>)}
                     </List>
             }
         </>
