@@ -2,12 +2,12 @@ import {ChangeEvent, useState} from "react";
 
 
 type Props = {
-    oldTitle: string
-    updateItem:(newTitle:string)=>void
+    value: string
+    onChange:(newTitle:string)=>void
 };
-export const EditableSpan = ({oldTitle,updateItem}: Props) => {
+export const EditableSpan = ({value,onChange}: Props) => {
     const [editMode, setEditMode] = useState(false)
-    const [newTitle, setNewTitle] = useState(oldTitle)
+    const [newTitle, setNewTitle] = useState(value)
 
     const activateEditModeHandler=()=>{
         setEditMode(!editMode)
@@ -22,7 +22,7 @@ export const EditableSpan = ({oldTitle,updateItem}: Props) => {
     }
 
     const addItemHandler = () => {
-        updateItem(newTitle)
+        onChange(newTitle)
     }
 
     return (
@@ -35,7 +35,7 @@ export const EditableSpan = ({oldTitle,updateItem}: Props) => {
                 onBlur={activateEditModeHandler}
                 autoFocus/>
             : <span
-                onDoubleClick={activateEditModeHandler }>{oldTitle}</span>
+                onDoubleClick={activateEditModeHandler }>{value}</span>
 
     );
 };

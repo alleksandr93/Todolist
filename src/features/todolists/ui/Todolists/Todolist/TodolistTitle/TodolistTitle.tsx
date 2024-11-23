@@ -21,7 +21,7 @@ export const TodolistTitle = ({todolist}:PropsType) => {
     return (
         <div className={styles.container}>
             <h3>
-                <EditableSpan oldTitle={todolist.title} updateItem={updateTodolist}/>
+                <EditableSpan value={todolist.title} onChange={updateTodolist}/>
                 <IconButton aria-label="delete" size="small" onClick={removeTodolist}>
                     <DeleteIcon fontSize="inherit"/>
                 </IconButton>

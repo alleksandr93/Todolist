@@ -31,7 +31,7 @@ export const Task = ({task,todolistId}:PropsType) => {
                       className={task.isDone ? 'is-done' : ''}>
         <div>
             <Checkbox defaultChecked checked={task.isDone} onChange={changeTaskStatusHandler}/>
-            <EditableSpan oldTitle={task.title} updateItem={(newTitle) => updateTaskHandler(newTitle)}/>
+            <EditableSpan value={task.title} onChange={(newTitle) => updateTaskHandler(newTitle)}/>
         </div>
         <IconButton aria-label="delete" size="small" onClick={removeTaskHandler}>
             <DeleteIcon fontSize="inherit"/>
