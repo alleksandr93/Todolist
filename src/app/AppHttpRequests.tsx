@@ -115,7 +115,7 @@ export const AppHttpRequests = () => {
             item: DomainTask
         }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks`, {title}, options)
             .then((res) => {
-                setTasks({...tasks, [todolistId]: [res.data.data.item, ...tasks[todolistId]]})
+                setTasks(prevState => ({...prevState, [todolistId]: [res.data.data.item, ...prevState[todolistId]]}))
             })
     }
 
