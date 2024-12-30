@@ -1,13 +1,13 @@
-import {createTheme} from '@mui/material';
-import {ThemeMode} from '../../app/app-reducer';
+import { createTheme } from "@mui/material"
+import { ThemeMode } from "../../app/app-reducer"
 
-export const getTheme =(themeMode:ThemeMode)=>{
-    return createTheme({
-        palette: {
-            mode: themeMode,
-            primary: {
-                main: '#4acaf6',
-            },
-        },
-    })
+export const getTheme = (themeMode: ThemeMode) => {
+  return createTheme({
+    palette: {
+      mode: themeMode,
+      primary: {
+        main: "#4acaf6",
+      },
+    },
+  })
 }
