@@ -1,10 +1,10 @@
 import { AddItemForm } from "common/components"
-import { TodolistType } from "../../../../../app/App"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
-import { addTaskAC, addTaskTC } from "../../../module/tasks-reducer"
+import { addTaskTC } from "../../../module/tasks-reducer"
 import { useAppDispatch } from "common/hooks"
 import { Tasks } from "./Tasks/Tasks"
+import type { TodolistType } from "../../../../../app"
 
 type PropsType = {
   todolist: TodolistType

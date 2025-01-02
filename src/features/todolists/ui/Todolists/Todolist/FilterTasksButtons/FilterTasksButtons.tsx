@@ -2,7 +2,7 @@ import React from "react"
 import ButtonGroup from "@mui/material/ButtonGroup"
 import Button from "@mui/material/Button"
 import { FilterValuesType, TodolistType } from "../../../../../../app/App"
-import { changeFilterAC } from "../../../../module/todolist-reducer"
+import { changeTodolistFilterAC } from "../../../../module/todolists-reducer"
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
 import { filterButtonsContainerSX } from "./FilterTasksButtons.styles"
 
@@ -14,7 +14,7 @@ export const FilterTasksButtons = ({ todolist }: PropsType) => {
   const { filter, id } = todolist
   const dispatch = useAppDispatch()
   const changeFilterTasksHandler = (filter: FilterValuesType) => {
-    dispatch(changeFilterAC({ id, filter }))
+    dispatch(changeTodolistFilterAC({ id, filter }))
   }
   return (
     <ButtonGroup sx={filterButtonsContainerSX}>

@@ -1,11 +1,11 @@
 import { ThemeProvider } from "@mui/material"
 import CssBaseline from "@mui/material/CssBaseline"
-import { getTheme } from "../common/theme/theme"
-import { Header } from "../common/components/Header/Header"
-import { Main } from "./Main"
-import { useAppSelector } from "../common/hooks/useAppSelector"
 import { selectThemeMode } from "./appSelectors"
 import type { DomainTask } from "../features/todolists/api"
+import { useAppSelector } from "common/hooks/useAppSelector"
+import { getTheme } from "common/theme/theme"
+import { Header } from "common/components"
+import { Main } from "./Main"
 
 export type FilterValuesType = "all" | "active" | "completed"
 export type TodolistType = {

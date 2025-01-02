@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper"
 import { useAppSelector } from "common/hooks/useAppSelector"
 import { Todolist } from "./Todolist/Todolist"
 import { selectTodolists } from "../../../../app/appSelectors"
-import { fetchTodolistsTC } from "../../module/todolist-reducer"
+import { fetchTodolistsTC } from "../../module/todolists-reducer"
 import { useAppDispatch } from "common/hooks"
 
 export const Todolists = () => {

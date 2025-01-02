@@ -13,6 +13,16 @@ export type UpdateTaskModel = {
   deadline: string | null
   status: TaskStatus
 }
+// UpdateTaskDomainModel это такой же тип как и UpdateTaskModel,
+// только все свойства в нем являются необязательными
+export type UpdateTaskDomainModel = {
+  title?: string
+  description?: string | null
+  status?: TaskStatus
+  priority?: TaskPriority
+  startDate?: string | null
+  deadline?: string
+}
 export type DomainTask = {
   description: string | null
   title: string
