@@ -4,10 +4,10 @@ import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
 import { addTaskTC } from "../../../module/tasks-reducer"
 import { useAppDispatch } from "common/hooks"
 import { Tasks } from "./Tasks/Tasks"
-import type { TodolistType } from "../../../../../app"
+import type { DomainTodolist } from "../../../module/todolists-reducer"
 
 type PropsType = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 
 export const Todolist = ({ todolist }: PropsType) => {
@@ -18,7 +18,7 @@ export const Todolist = ({ todolist }: PropsType) => {
   return (
     <div>
       <TodolistTitle todolist={todolist} />
-      <AddItemForm addItem={addTask} />
+      <AddItemForm addItem={addTask} disabled={todolist.entityStatus === "loading"} />
       <Tasks todolist={todolist} />
       <FilterTasksButtons todolist={todolist} />
     </div>

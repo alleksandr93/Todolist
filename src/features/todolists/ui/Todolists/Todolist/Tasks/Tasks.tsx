@@ -1,15 +1,15 @@
 import React, { useEffect } from "react"
 import List from "@mui/material/List"
-import { TodolistType } from "../../../../../../app/App"
 import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
 import { Task } from "./Task/Task"
 import { selectTasks } from "../../../../../../app/appSelectors"
 import { useAppDispatch } from "common/hooks"
 import { fetchTasksTC } from "../../../../module/tasks-reducer"
 import { TaskStatus } from "../../../../lib/enums"
+import type { DomainTodolist } from "../../../../module/todolists-reducer"
 
 type PropsType = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 export const Tasks = ({ todolist }: PropsType) => {
   const dispatch = useAppDispatch()

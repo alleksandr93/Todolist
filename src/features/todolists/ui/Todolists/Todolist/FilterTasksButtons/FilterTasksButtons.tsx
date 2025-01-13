@@ -1,13 +1,13 @@
 import React from "react"
 import ButtonGroup from "@mui/material/ButtonGroup"
 import Button from "@mui/material/Button"
-import { FilterValuesType, TodolistType } from "../../../../../../app/App"
-import { changeTodolistFilterAC } from "../../../../module/todolists-reducer"
+import { FilterValuesType } from "../../../../../../app/App"
+import { changeTodolistFilterAC, type DomainTodolist } from "../../../../module/todolists-reducer"
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
 import { filterButtonsContainerSX } from "./FilterTasksButtons.styles"
 
 type PropsType = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 
 export const FilterTasksButtons = ({ todolist }: PropsType) => {

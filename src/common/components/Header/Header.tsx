@@ -11,10 +11,12 @@ import Box from "@mui/material/Box"
 import * as React from "react"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
-import { selectThemeMode } from "../../../app/appSelectors"
+import { selectStatus, selectThemeMode } from "../../../app/appSelectors"
+import { LinearProgress } from "@mui/material"
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
+  const status = useAppSelector(selectStatus)
   const dispatch = useAppDispatch()
   const theme = getTheme(themeMode)
 
@@ -38,6 +40,7 @@ export const Header = () => {
           <MenuButton color="inherit">FAQ</MenuButton>
           <Switch onClick={changeModeHandler} />
         </Toolbar>
+        {status === "loading" && <LinearProgress />}
       </AppBar>
     </Box>
   )

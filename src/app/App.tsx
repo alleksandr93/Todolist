@@ -6,13 +6,10 @@ import { useAppSelector } from "common/hooks/useAppSelector"
 import { getTheme } from "common/theme/theme"
 import { Header } from "common/components"
 import { Main } from "./Main"
+import { ErrorSnackbar } from "common/components/ErrorSnackbar/ErrorSnackbar"
 
 export type FilterValuesType = "all" | "active" | "completed"
-export type TodolistType = {
-  id: string
-  title: string
-  filter: FilterValuesType
-}
+
 export type TasksStateType = {
   [key: string]: DomainTask[]
 }
@@ -26,6 +23,7 @@ function App() {
         <CssBaseline />
         <Header />
         <Main />
+        <ErrorSnackbar />
       </ThemeProvider>
     </div>
   )
