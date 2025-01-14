@@ -67,17 +67,33 @@ export const fetchTasksTC =
   (id: string): AppThunk =>
   dispatch => {
     dispatch(setAppStatusAC("loading"))
-    tasksApi.getTasks(id).then(res => {
-      dispatch(setTasksAC({ todolistId: id, tasks: res.data.items }))
-      dispatch(setAppStatusAC("succeeded"))
-    })
+    tasksApi
+      .getTasks(id)
+      .then(res => {
+        dispatch(setTasksAC({ todolistId: id, tasks: res.data.items }))
+        dispatch(setAppStatusAC("succeeded"))
+      })
+      .catch(error => {
+        handleServerNetworkError(error, dispatch)
+      })
   }
 export const deleteTaskTC =
   (arg: { todolistId: string; taskId: string }): AppThunk =>
   dispatch => {
-    tasksApi.deleteTask(arg).then(res => {
-      dispatch(removeTaskAC(arg))
-    })
+    dispatch(setAppStatusAC("loading"))
+    tasksApi
+      .deleteTask(arg)
+      .then(res => {
+        if (res.data.resultCode === ResultCode.Success) {
+          dispatch(removeTaskAC(arg))
+          dispatch(setAppStatusAC("succeeded"))
+        } else {
+          handleServerAppError(res.data, dispatch)
+        }
+      })
+      .catch(error => {
+        handleServerNetworkError(error, dispatch)
+      })
   }
 export const addTaskTC =
   (arg: { todolistId: string; title: string }): AppThunk =>
@@ -86,7 +102,6 @@ export const addTaskTC =
     tasksApi
       .createTask(arg)
       .then(res => {
-        console.log(res.data.resultCode)
         if (res.data.resultCode === ResultCode.Success) {
           dispatch(addTaskAC({ task: res.data.data.item }))
           dispatch(setAppStatusAC("succeeded"))
@@ -125,12 +140,7 @@ export const updateTaskTC =
             dispatch(updateTaskAC(arg))
             dispatch(setAppStatusAC("succeeded"))
           } else {
-            if (res.data.messages.length) {
-              dispatch(setAppErrorAC(res.data.messages[0]))
-            } else {
-              dispatch(setAppErrorAC("Some error occurred"))
-            }
-            dispatch(setAppStatusAC("failed"))
+            handleServerAppError(res.data, dispatch)
           }
         })
         .catch(error => {

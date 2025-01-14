@@ -17,10 +17,11 @@ export const TodolistTitle = ({ todolist }: PropsType) => {
   const updateTodolist = (title: string) => {
     dispatch(updateTodolistTitleTC({ title, id: todolist.id }))
   }
+  console.log(todolist.entityStatus)
   return (
     <div className={styles.container}>
       <h3>
-        <EditableSpan value={todolist.title} onChange={updateTodolist} />
+        <EditableSpan value={todolist.title} onChange={updateTodolist} disabled={todolist.entityStatus === "loading"} />
         <IconButton
           disabled={todolist.entityStatus === "loading"}
           aria-label="delete"

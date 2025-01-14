@@ -7,14 +7,15 @@ import { deleteTaskTC, updateTaskTC } from "../../../../../module/tasks-reducer"
 import { getListItemSx } from "./Task.styles"
 import { useAppDispatch } from "common/hooks"
 import { EditableSpan } from "common/components"
-import type { DomainTask, UpdateTaskDomainModel } from "../../../../../api"
+import type { DomainTask } from "../../../../../api"
 import { TaskStatus } from "../../../../../lib/enums"
 
 type PropsType = {
   task: DomainTask
   todolistId: string
+  disabled: boolean
 }
-export const Task = ({ task, todolistId }: PropsType) => {
+export const Task = ({ task, todolistId, disabled }: PropsType) => {
   const dispatch = useAppDispatch()
   const removeTaskHandler = () => {
     dispatch(deleteTaskTC({ todolistId: todolistId, taskId: task.id }))
@@ -34,10 +35,15 @@ export const Task = ({ task, todolistId }: PropsType) => {
       className={task.status === TaskStatus.Completed ? "is-done" : ""}
     >
       <div>
-        <Checkbox defaultChecked checked={task.status === TaskStatus.Completed} onChange={changeTaskStatusHandler} />
-        <EditableSpan value={task.title} onChange={newTitle => updateTaskHandler(newTitle)} />
+        <Checkbox
+          disabled={disabled}
+          defaultChecked
+          checked={task.status === TaskStatus.Completed}
+          onChange={changeTaskStatusHandler}
+        />
+        <EditableSpan value={task.title} onChange={newTitle => updateTaskHandler(newTitle)} disabled={disabled} />
       </div>
-      <IconButton aria-label="delete" size="small" onClick={removeTaskHandler}>
+      <IconButton disabled={disabled} aria-label="delete" size="small" onClick={removeTaskHandler}>
         <DeleteIcon fontSize="inherit" />
       </IconButton>
     </ListItem>
