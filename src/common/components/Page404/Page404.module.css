@@ -1,0 +1,37 @@
+.title {
+    text-align: center;
+    font-size: 250px;
+    margin: 0;
+}
+
+.subTitle {
+    text-align: center;
+    font-size: 50px;
+    margin: 0;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+
+
+}
+.btn a {
+    font-size: 25px;
+    text-align: center;
+    color: inherit;
+    text-decoration: none;
+    background-color: #4482ff;
+    border-radius: 4px;
+    padding: 5px;
+    transition: 0.45s;
+    font-weight: 300;
+    font-style: italic;
+}
+.btn a:hover {
+
+    background-color: #708bc7;
+
+}

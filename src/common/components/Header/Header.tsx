@@ -13,8 +13,11 @@ import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
 import { selectStatus, selectThemeMode } from "../../../app/appSelectors"
 import { LinearProgress } from "@mui/material"
+import { selectIsLoggedIn } from "../../../features/auth/model/authSelector"
+import { logoutTC } from "../../../features/auth/model/auth-reducer"
 
 export const Header = () => {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const themeMode = useAppSelector(selectThemeMode)
   const status = useAppSelector(selectStatus)
   const dispatch = useAppDispatch()
@@ -22,6 +25,9 @@ export const Header = () => {
 
   const changeModeHandler = () => {
     dispatch(changeThemeAC(themeMode === "light" ? "dark" : "light"))
+  }
+  const logoutHandler = () => {
+    dispatch(logoutTC())
   }
   return (
     <Box sx={{ flexGrow: 1, marginBottom: "80px" }}>
@@ -33,10 +39,11 @@ export const Header = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
-          <MenuButton background={theme.palette.primary.light} color="inherit">
-            Login
-          </MenuButton>
-          <MenuButton color="inherit">Logout</MenuButton>
+          {isLoggedIn && (
+            <MenuButton onClick={logoutHandler} color="inherit">
+              Logout
+            </MenuButton>
+          )}
           <MenuButton color="inherit">FAQ</MenuButton>
           <Switch onClick={changeModeHandler} />
         </Toolbar>
