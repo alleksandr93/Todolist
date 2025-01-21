@@ -5,6 +5,7 @@ import type { AppThunk } from "../../../app/store"
 import { handleServerNetworkError } from "common/utils"
 import { ResultCode } from "../lib/enums"
 import { handleServerAppError } from "common/utils/handleServerAppError"
+import { fetchTasksTC } from "./tasks-reducer"
 
 export type DomainTodolist = Todolist & {
   filter: FilterValuesType
@@ -28,6 +29,8 @@ export const todolistsReducer = (state: DomainTodolist[] = unitialState, action:
       return state.map(el => (el.id === action.payload.id ? { ...el, filter: action.payload.filter } : el))
     case "CHANGE_TODOLIST_ENTITY_STATUS":
       return state.map(el => (el.id === action.payload.id ? { ...el, entityStatus: action.payload.entityStatus } : el))
+    case "CLEAR_TODOLIST":
+      return []
     default:
       return state
   }
@@ -41,7 +44,9 @@ export const fetchTodolistsTC = (): AppThunk => dispatch => {
     .then(res => {
       dispatch(setTodolistsAC(res.data))
       dispatch(setAppStatusAC("succeeded"))
+      return res.data
     })
+    .then(res => res.forEach(e => dispatch(fetchTasksTC(e.id))))
     .catch(error => {
       handleServerNetworkError(error, dispatch)
     })
@@ -133,6 +138,9 @@ export const changeTodolistEntityStatusAC = (payload: { id: string; entityStatus
   return { type: "CHANGE_TODOLIST_ENTITY_STATUS", payload } as const
 }
 
+export const clearTodolistAC = () => {
+  return { type: "CLEAR_TODOLIST" } as const
+}
 //types
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
@@ -140,6 +148,7 @@ export type ChangeTodolistTitleActionType = ReturnType<typeof changeTodolistTitl
 export type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
 export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
 export type ChangeTodolistEntityStatusType = ReturnType<typeof changeTodolistEntityStatusAC>
+export type ClearTodolistActionType = ReturnType<typeof clearTodolistAC>
 
 type ActionsType =
   | RemoveTodolistActionType
@@ -148,3 +157,4 @@ type ActionsType =
   | ChangeTodolistFilterActionType
   | SetTodolistsActionType
   | ChangeTodolistEntityStatusType
+  | ClearTodolistActionType

@@ -1,9 +1,9 @@
-import { AddTodolistActionType, RemoveTodolistActionType } from "./todolists-reducer"
+import { AddTodolistActionType, type ClearTodolistActionType, RemoveTodolistActionType } from "./todolists-reducer"
 import { type DomainTask, tasksApi, type UpdateTaskDomainModel, type UpdateTaskModel } from "../api"
 import { ResultCode, TaskStatus } from "../lib/enums"
 import type { TasksStateType } from "../../../app/App"
 import type { AppThunk } from "../../../app/store"
-import { setAppErrorAC, setAppStatusAC } from "../../../app/app-reducer"
+import { setAppStatusAC } from "../../../app/app-reducer"
 import { handleServerNetworkError } from "common/utils"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 
@@ -21,6 +21,7 @@ type ActionsType =
   | AddTodolistActionType
   | RemoveTodolistActionType
   | SetTasksActionType
+  | ClearTodolistActionType
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
   switch (action.type) {
@@ -38,7 +39,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         ...state,
         [newTask.todoListId]: [action.payload.task, ...state[newTask.todoListId]],
       }
-
     case "UPDATE_TASK":
       return {
         ...state,
@@ -57,12 +57,14 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
       const copyState = { ...state }
       delete copyState[action.payload.id]
       return copyState
-
+    case "CLEAR_TODOLIST":
+      return {}
     default:
       return state
   }
 }
 // Thunk
+
 export const fetchTasksTC =
   (id: string): AppThunk =>
   dispatch => {

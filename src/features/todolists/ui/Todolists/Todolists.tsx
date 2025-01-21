@@ -8,11 +8,12 @@ import { fetchTodolistsTC } from "../../module/todolists-reducer"
 import { useAppDispatch } from "common/hooks"
 
 export const Todolists = () => {
+  const todolists = useAppSelector(selectTodolists)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(fetchTodolistsTC())
   }, [])
-  const todolists = useAppSelector(selectTodolists)
+
   return (
     <>
       {todolists.map(tl => {

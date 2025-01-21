@@ -26,6 +26,7 @@ function App() {
   useLayoutEffect(() => {
     dispatch(initializeAppTC())
   }, [])
+
   if (!isInitialized) {
     return (
       <div className={s.circularProgressContainer}>

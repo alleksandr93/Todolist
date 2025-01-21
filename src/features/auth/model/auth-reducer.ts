@@ -5,6 +5,7 @@ import type { AppThunk } from "../../../app/store"
 import { ResultCode } from "../../todolists/lib/enums"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils"
+import { clearTodolistAC } from "../../todolists/module/todolists-reducer"
 
 type InitialStateType = typeof initialState
 
@@ -65,8 +66,9 @@ export const logoutTC = (): AppThunk => dispatch => {
       if (res.data.resultCode === ResultCode.Success) {
         dispatch(setIsLoggedInAC(false))
         dispatch(setAppStatusAC("succeeded"))
-        // записываем токен в локал стордж
+        // удаляем токен в локал стордж
         localStorage.removeItem("sn-token")
+        dispatch(clearTodolistAC())
       } else {
         handleServerAppError(res.data, dispatch)
       }
