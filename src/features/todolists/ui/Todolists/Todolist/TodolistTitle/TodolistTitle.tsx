@@ -2,7 +2,7 @@ import React from "react"
 import { EditableSpan } from "../../../../../../common/components/EditableSpan/EditableSpan"
 import IconButton from "@mui/material/IconButton"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { type DomainTodolist, removeTodolistTC, updateTodolistTitleTC } from "../../../../module/todolists-reducer"
+import { type DomainTodolist, removeTodolistTC, updateTodolistTitleTC } from "../../../../module/todolistsSlice"
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
 import styles from "./TodolistTitle.module.css"
 

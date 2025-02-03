@@ -1,20 +1,20 @@
-import { applyMiddleware, combineReducers, legacy_createStore as createStore, type UnknownAction } from "redux"
-import { tasksReducer } from "../features/todolists/module/tasks-reducer"
-import { todolistsReducer } from "../features/todolists/module/todolists-reducer"
-import { appReducer } from "./app-reducer"
-import { thunk, type ThunkAction, type ThunkDispatch } from "redux-thunk"
-import { authReducer } from "../features/auth/model/auth-reducer"
+import { type UnknownAction } from "redux"
+import { tasksReducer, tasksSlice } from "../features/todolists/module/tasksSlice"
+import { todolistsReducer, todolistsSlice } from "../features/todolists/module/todolistsSlice"
+import { appReducer, appSlice } from "./appSlice"
+import { type ThunkAction, type ThunkDispatch } from "redux-thunk"
+import { configureStore } from "@reduxjs/toolkit"
+import { authReducer, authSlice } from "../features/auth/model/authSlice"
 
-// объединяя reducer-ы с помощью combineReducers,
-// мы задаём структуру нашего единственного объекта-состояния
-const rootReducer = combineReducers({
-  tasks: tasksReducer,
-  todolists: todolistsReducer,
-  app: appReducer,
-  auth: authReducer,
-})
 // непосредственно создаём store
-export const store = createStore(rootReducer, {}, applyMiddleware(thunk))
+export const store = configureStore({
+  reducer: {
+    [tasksSlice.name]: tasksReducer,
+    [todolistsSlice.name]: todolistsReducer,
+    [appSlice.name]: appReducer,
+    [authSlice.name]: authReducer,
+  },
+})
 
 // определить автоматически тип всего объекта состояния
 export type RootState = ReturnType<typeof store.getState>

@@ -9,16 +9,16 @@ import Button from "@mui/material/Button"
 import Checkbox from "@mui/material/Checkbox"
 import { Controller, type SubmitHandler, useForm } from "react-hook-form"
 import s from "./Login.module.css"
-import { loginTC } from "../../model/auth-reducer"
+import { loginTC, selectIsLoggedIn } from "../../model/authSlice"
 import { useAppDispatch } from "common/hooks"
 import { useNavigate } from "react-router"
-import { selectIsLoggedIn } from "../../model/authSelector"
 import { Path } from "../../../todolists/lib/enums"
 
 export type Inputs = {
   email: string
   password: string
   rememberMe: boolean
+  captcha: boolean
 }
 
 export const Login = () => {
@@ -31,7 +31,7 @@ export const Login = () => {
     reset,
     control,
     formState: { errors },
-  } = useForm<Inputs>({ defaultValues: { email: "", password: "", rememberMe: false } })
+  } = useForm<Inputs>({ defaultValues: { email: "", password: "", rememberMe: false, captcha: true } })
   const onSubmit: SubmitHandler<Inputs> = data => {
     dispatch(loginTC(data))
     reset()

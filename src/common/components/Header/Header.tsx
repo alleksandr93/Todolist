@@ -1,4 +1,3 @@
-import { changeThemeAC } from "../../../app/app-reducer"
 import { getTheme } from "../../theme/theme"
 import AppBar from "@mui/material/AppBar"
 import Toolbar from "@mui/material/Toolbar"
@@ -13,8 +12,8 @@ import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
 import { selectStatus, selectThemeMode } from "../../../app/appSelectors"
 import { LinearProgress } from "@mui/material"
-import { selectIsLoggedIn } from "../../../features/auth/model/authSelector"
-import { logoutTC } from "../../../features/auth/model/auth-reducer"
+import { logoutTC, selectIsLoggedIn } from "../../../features/auth/model/authSlice"
+import { changeTheme } from "../../../app/appSlice"
 
 export const Header = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
@@ -24,7 +23,7 @@ export const Header = () => {
   const theme = getTheme(themeMode)
 
   const changeModeHandler = () => {
-    dispatch(changeThemeAC(themeMode === "light" ? "dark" : "light"))
+    dispatch(changeTheme({ theme: themeMode === "light" ? "dark" : "light" }))
   }
   const logoutHandler = () => {
     dispatch(logoutTC())

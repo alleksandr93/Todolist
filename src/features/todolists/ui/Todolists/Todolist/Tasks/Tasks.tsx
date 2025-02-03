@@ -4,7 +4,7 @@ import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
 import { Task } from "./Task/Task"
 import { selectTasks } from "../../../../../../app/appSelectors"
 import { TaskStatus } from "../../../../lib/enums"
-import type { DomainTodolist } from "../../../../module/todolists-reducer"
+import type { DomainTodolist } from "../../../../module/todolistsSlice"
 
 type PropsType = {
   todolist: DomainTodolist
