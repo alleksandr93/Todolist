@@ -1,7 +1,6 @@
 import React, { useEffect } from "react"
 import { useAppSelector } from "common/hooks/useAppSelector"
 import { getTheme } from "common/theme/theme"
-import { selectThemeMode } from "../../../../app/appSelectors"
 import Grid from "@mui/material/Grid"
 import { FormControl, FormControlLabel, FormGroup, FormLabel } from "@mui/material"
 import TextField from "@mui/material/TextField"
@@ -13,6 +12,7 @@ import { loginTC, selectIsLoggedIn } from "../../model/authSlice"
 import { useAppDispatch } from "common/hooks"
 import { useNavigate } from "react-router"
 import { Path } from "../../../todolists/lib/enums"
+import { selectThemeMode } from "../../../../app/appSlice"
 
 export type Inputs = {
   email: string

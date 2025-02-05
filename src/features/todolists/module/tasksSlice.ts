@@ -45,10 +45,14 @@ export const tasksSlice = createSlice({
       delete state[action.payload.todolistId]
     })
   },
+  selectors: {
+    selectTasks: state => state,
+  },
 })
 
 export const tasksReducer = tasksSlice.reducer
 export const { setTasks, clearTasks, removeTask, updateTask, addTask } = tasksSlice.actions
+export const { selectTasks } = tasksSlice.selectors
 // Thunk
 
 export const fetchTasksTC =

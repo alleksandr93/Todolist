@@ -10,10 +10,9 @@ import Box from "@mui/material/Box"
 import * as React from "react"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
-import { selectStatus, selectThemeMode } from "../../../app/appSelectors"
 import { LinearProgress } from "@mui/material"
 import { logoutTC, selectIsLoggedIn } from "../../../features/auth/model/authSlice"
-import { changeTheme } from "../../../app/appSlice"
+import { changeTheme, selectStatus, selectThemeMode } from "../../../app/appSlice"
 
 export const Header = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)

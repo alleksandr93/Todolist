@@ -1,6 +1,5 @@
 import { CircularProgress, ThemeProvider } from "@mui/material"
 import CssBaseline from "@mui/material/CssBaseline"
-import { selectThemeMode } from "./appSelectors"
 import type { DomainTask } from "../features/todolists/api"
 import { useAppSelector } from "common/hooks/useAppSelector"
 import { getTheme } from "common/theme/theme"
@@ -11,6 +10,8 @@ import { useLayoutEffect } from "react"
 import { initializeAppTC, selectIsInitialized } from "../features/auth/model/authSlice"
 import { useAppDispatch } from "common/hooks"
 import s from "./App.module.css"
+import { selectThemeMode } from "./appSlice"
+
 export type FilterValuesType = "all" | "active" | "completed"
 
 export type TasksStateType = {
