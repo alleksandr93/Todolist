@@ -5,23 +5,29 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import { type DomainTodolist, removeTodolistTC, updateTodolistTitleTC } from "../../../../module/todolistsSlice"
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
 import styles from "./TodolistTitle.module.css"
+import { useDeleteTodolistMutation, useUpdateTodolistMutation } from "../../../../api"
 
 type PropsType = {
   todolist: DomainTodolist
 }
 export const TodolistTitle = ({ todolist }: PropsType) => {
-  const dispatch = useAppDispatch()
+  const [deleteTodolist] = useDeleteTodolistMutation()
+  const [updateTodolist] = useUpdateTodolistMutation()
   const removeTodolist = () => {
-    dispatch(removeTodolistTC(todolist.id))
+    deleteTodolist(todolist.id)
   }
-  const updateTodolist = (title: string) => {
-    dispatch(updateTodolistTitleTC({ title, id: todolist.id }))
+  const updateTodolistHandler = (title: string) => {
+    updateTodolist({ id: todolist.id, title })
   }
-  console.log(todolist.entityStatus)
+
   return (
     <div className={styles.container}>
       <h3>
-        <EditableSpan value={todolist.title} onChange={updateTodolist} disabled={todolist.entityStatus === "loading"} />
+        <EditableSpan
+          value={todolist.title}
+          onChange={updateTodolistHandler}
+          disabled={todolist.entityStatus === "loading"}
+        />
         <IconButton
           disabled={todolist.entityStatus === "loading"}
           aria-label="delete"
