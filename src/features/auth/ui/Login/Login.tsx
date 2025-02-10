@@ -8,11 +8,11 @@ import Button from "@mui/material/Button"
 import Checkbox from "@mui/material/Checkbox"
 import { Controller, type SubmitHandler, useForm } from "react-hook-form"
 import s from "./Login.module.css"
-import { loginTC, selectIsLoggedIn } from "../../model/authSlice"
 import { useAppDispatch } from "common/hooks"
 import { useNavigate } from "react-router"
-import { Path } from "../../../todolists/lib/enums"
-import { selectThemeMode } from "../../../../app/appSlice"
+import { Path, ResultCode } from "../../../todolists/lib/enums"
+import { selectIsLoggedIn, selectThemeMode, setIsLoggedIn } from "../../../../app/appSlice"
+import { useLoginMutation } from "../../api/authApi"
 
 export type Inputs = {
   email: string
@@ -25,6 +25,7 @@ export const Login = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const [login] = useLoginMutation()
   const {
     register,
     handleSubmit,
@@ -33,8 +34,15 @@ export const Login = () => {
     formState: { errors },
   } = useForm<Inputs>({ defaultValues: { email: "", password: "", rememberMe: false, captcha: true } })
   const onSubmit: SubmitHandler<Inputs> = data => {
-    dispatch(loginTC(data))
-    reset()
+    login(data)
+      .then(res => {
+        if (res.data?.resultCode === ResultCode.Success) {
+          dispatch(setIsLoggedIn({ isLoggedIn: true }))
+          // записываем токен в локал стордж
+          localStorage.setItem("sn-token", res.data.data.token)
+        }
+      })
+      .finally(() => reset())
   }
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)

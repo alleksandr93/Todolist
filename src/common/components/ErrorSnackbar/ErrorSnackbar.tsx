@@ -3,10 +3,10 @@ import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar"
 import Alert from "@mui/material/Alert"
 import { useAppSelector } from "common/hooks/useAppSelector"
 import { useAppDispatch } from "common/hooks"
-import { selectAppEror, setAppError } from "../../../app/appSlice"
+import { selectAppError, setAppError } from "../../../app/appSlice"
 
 export const ErrorSnackbar = () => {
-  const error = useAppSelector(selectAppEror)
+  const error = useAppSelector(selectAppError)
   const dispatch = useAppDispatch()
 
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: SnackbarCloseReason) => {

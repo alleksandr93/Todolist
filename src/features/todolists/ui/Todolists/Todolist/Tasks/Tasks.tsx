@@ -1,15 +1,21 @@
-import React from "react"
+import React, { useEffect } from "react"
 import List from "@mui/material/List"
 import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
 import { Task } from "./Task/Task"
 import { TaskStatus } from "../../../../lib/enums"
 import type { DomainTodolist } from "../../../../module/todolistsSlice"
-import { selectTasks } from "../../../../module/tasksSlice"
+import { fetchTasksTC, selectTasks } from "../../../../module/tasksSlice"
+import { useAppDispatch } from "common/hooks"
 
 type PropsType = {
   todolist: DomainTodolist
 }
 export const Tasks = ({ todolist }: PropsType) => {
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(fetchTasksTC(todolist.id))
+  }, [])
+
   const tasks = useAppSelector(selectTasks)
   const allTasks = tasks[todolist.id]
   let tasksForTodolist = allTasks
@@ -19,6 +25,7 @@ export const Tasks = ({ todolist }: PropsType) => {
   if (todolist.filter === "completed") {
     tasksForTodolist = allTasks.filter(task => task.status === TaskStatus.Completed)
   }
+
   return (
     <>
       {tasksForTodolist && tasksForTodolist.length === 0 ? (

@@ -95,6 +95,7 @@ export const addTaskTC =
       .createTask(arg)
       .then(res => {
         if (res.data.resultCode === ResultCode.Success) {
+          console.log(res.data)
           dispatch(addTask({ task: res.data.data.item }))
           dispatch(setAppStatus({ status: "succeeded" }))
         } else {

@@ -11,8 +11,18 @@ import * as React from "react"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
 import { LinearProgress } from "@mui/material"
-import { logoutTC, selectIsLoggedIn } from "../../../features/auth/model/authSlice"
-import { changeTheme, selectStatus, selectThemeMode } from "../../../app/appSlice"
+import {
+  changeTheme,
+  selectIsLoggedIn,
+  selectStatus,
+  selectThemeMode,
+  setAppStatus,
+  setIsLoggedIn,
+} from "../../../app/appSlice"
+import { useLogoutMutation } from "../../../features/auth/api/authApi"
+import { ResultCode } from "../../../features/todolists/lib/enums"
+import { clearTasks } from "../../../features/todolists/module/tasksSlice"
+import { clearTodolist } from "../../../features/todolists/module/todolistsSlice"
 
 export const Header = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
@@ -20,12 +30,22 @@ export const Header = () => {
   const status = useAppSelector(selectStatus)
   const dispatch = useAppDispatch()
   const theme = getTheme(themeMode)
-
+  const [logout] = useLogoutMutation()
   const changeModeHandler = () => {
     dispatch(changeTheme({ theme: themeMode === "light" ? "dark" : "light" }))
+    localStorage.setItem("sn-theme", themeMode === "light" ? "dark" : "light")
   }
   const logoutHandler = () => {
-    dispatch(logoutTC())
+    console.log(21313)
+    logout().then(res => {
+      if (res.data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: false }))
+        dispatch(clearTasks())
+        dispatch(clearTodolist())
+        // удаляем токен в локал стордж
+        localStorage.removeItem("sn-token")
+      }
+    })
   }
   return (
     <Box sx={{ flexGrow: 1, marginBottom: "80px" }}>
@@ -43,7 +63,7 @@ export const Header = () => {
             </MenuButton>
           )}
           <MenuButton color="inherit">FAQ</MenuButton>
-          <Switch onClick={changeModeHandler} />
+          <Switch defaultChecked={themeMode === "dark"} onClick={changeModeHandler} />
         </Toolbar>
         {status === "loading" && <LinearProgress />}
       </AppBar>

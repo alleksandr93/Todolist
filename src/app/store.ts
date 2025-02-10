@@ -4,9 +4,9 @@ import { todolistsReducer, todolistsSlice } from "../features/todolists/module/t
 import { appReducer, appSlice } from "./appSlice"
 import { type ThunkAction, type ThunkDispatch } from "redux-thunk"
 import { configureStore } from "@reduxjs/toolkit"
-import { authReducer, authSlice } from "../features/auth/model/authSlice"
 import { todolistApi } from "../features/todolists/api"
 import { setupListeners } from "@reduxjs/toolkit/query"
+import { baseApi } from "./baseApi"
 
 // непосредственно создаём store
 export const store = configureStore({
@@ -14,8 +14,7 @@ export const store = configureStore({
     [tasksSlice.name]: tasksReducer,
     [todolistsSlice.name]: todolistsReducer,
     [appSlice.name]: appReducer,
-    [authSlice.name]: authReducer,
-    [todolistApi.reducerPath]: todolistApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(todolistApi.middleware),
 })

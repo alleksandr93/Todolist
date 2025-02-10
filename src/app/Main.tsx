@@ -3,13 +3,11 @@ import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import { AddItemForm } from "common/components"
 import { Todolists } from "../features/todolists/ui/Todolists/Todolists"
-import { useAppDispatch } from "common/hooks"
-import { addTodolistTC } from "../features/todolists/module/todolistsSlice"
 import { useAppSelector } from "common/hooks/useAppSelector"
 import { Path } from "../features/todolists/lib/enums"
 import { useNavigate } from "react-router"
-import { selectIsLoggedIn } from "../features/auth/model/authSlice"
-import { useCreateTodolistMutation } from "../features/todolists/api"
+import { selectIsLoggedIn } from "./appSlice"
+import { useCreateTodolistMutation } from "../features/todolists/api/todolistsApi"
 
 export const Main = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
