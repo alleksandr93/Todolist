@@ -1,7 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { setAppError } from "./appSlice"
-import { isErrorWithMessage } from "common/utils/isErrorWithMessage"
-import { ResultCode } from "../features/todolists/lib/enums"
 import { handleError } from "common/utils/handleError"
 
 export const baseApi = createApi({

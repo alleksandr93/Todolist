@@ -13,8 +13,6 @@ import { selectThemeMode, setIsLoggedIn, setTheme, type ThemeMode } from "./appS
 import { useMeQuery } from "../features/auth/api/authApi"
 import { ResultCode } from "../features/todolists/lib/enums"
 
-export type FilterValuesType = "all" | "active" | "completed"
-
 export type TasksStateType = {
   [key: string]: DomainTask[]
 }

@@ -1,8 +1,8 @@
 import type { Todolist } from "./todolistsApi.types"
 import type { BaseResponse } from "common/types"
 // "@reduxjs/toolkit/query" изначально будет потому что это используеться для других фреймворков типа Angular , надо добавить react в конце: "@reduxjs/toolkit/query/react"
-import type { DomainTodolist } from "../module/todolistsSlice"
 import { baseApi } from "../../../app/baseApi"
+import type { DomainTodolist } from "../lib/types/types"
 
 export const todolistApi = baseApi.injectEndpoints({
   endpoints: builder => ({

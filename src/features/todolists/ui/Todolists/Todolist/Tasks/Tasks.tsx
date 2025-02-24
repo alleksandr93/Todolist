@@ -2,11 +2,9 @@ import React from "react"
 import List from "@mui/material/List"
 import { Task } from "./Task/Task"
 import { TaskStatus } from "../../../../lib/enums"
-import type { DomainTodolist } from "../../../../module/todolistsSlice"
-import { useAppDispatch } from "common/hooks"
 import { useGetTasksQuery } from "../../../../api"
 import { TasksSkeleton } from "../../../skeletons/TasksSkeleton/TasksSkeleton"
-import { setAppError } from "../../../../../../app/appSlice"
+import type { DomainTodolist } from "../../../../lib/types/types"
 
 type PropsType = {
   todolist: DomainTodolist
@@ -14,7 +12,7 @@ type PropsType = {
 export const Tasks = ({ todolist }: PropsType) => {
   const { data: tasks, isLoading, isError, error } = useGetTasksQuery(todolist.id)
   console.log({ isError, error })
-  const dispatch = useAppDispatch()
+
   const allTasks = tasks?.items
 
   let tasksForTodolist = allTasks
@@ -28,16 +26,7 @@ export const Tasks = ({ todolist }: PropsType) => {
   if (isLoading) {
     return <TasksSkeleton />
   }
-  // if (error) {
-  //   if ("status" in error) {
-  //     //fetchBaseQueryError
-  //     const errorMsg = "error" in error ? error.error : JSON.stringify(error.data)
-  //     dispatch(setAppError({ error: errorMsg }))
-  //   } else {
-  //     //SerializedError
-  //     dispatch(setAppError({ error: error.message ? error.message : "Some error" }))
-  //   }
-  // }
+
   return (
     <>
       {tasksForTodolist && tasksForTodolist.length === 0 ? (

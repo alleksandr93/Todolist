@@ -11,19 +11,9 @@ import * as React from "react"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
 import { LinearProgress } from "@mui/material"
-import {
-  changeTheme,
-  selectIsLoggedIn,
-  selectStatus,
-  selectThemeMode,
-  setAppStatus,
-  setIsLoggedIn,
-} from "../../../app/appSlice"
+import { changeTheme, selectIsLoggedIn, selectStatus, selectThemeMode, setIsLoggedIn } from "../../../app/appSlice"
 import { useLogoutMutation } from "../../../features/auth/api/authApi"
 import { ResultCode } from "../../../features/todolists/lib/enums"
-import { clearTasks } from "../../../features/todolists/module/tasksSlice"
-import { clearTodolist } from "../../../features/todolists/module/todolistsSlice"
-import { todolistApi } from "../../../features/todolists/api"
 import { baseApi } from "../../../app/baseApi"
 
 export const Header = () => {

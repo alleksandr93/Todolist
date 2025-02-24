@@ -1,12 +1,11 @@
 import React from "react"
 import ButtonGroup from "@mui/material/ButtonGroup"
 import Button from "@mui/material/Button"
-import { FilterValuesType } from "../../../../../../app/App"
 import { useAppDispatch } from "common/hooks"
 import { filterButtonsContainerSX } from "./FilterTasksButtons.styles"
-import { type DomainTodolist } from "../../../../module/todolistsSlice"
 import { todolistApi } from "../../../../api"
 import { current } from "@reduxjs/toolkit"
+import type { DomainTodolist, FilterValues } from "../../../../lib/types/types"
 
 type PropsType = {
   todolist: DomainTodolist
@@ -15,7 +14,7 @@ type PropsType = {
 export const FilterTasksButtons = ({ todolist }: PropsType) => {
   const { filter, id } = todolist
   const dispatch = useAppDispatch()
-  const changeFilterTasksHandler = (filter: FilterValuesType) => {
+  const changeFilterTasksHandler = (filter: FilterValues) => {
     // 1. Имя инпоитна(Получение тудулистов). 2. Аргементы которые есть в даном инпоинте(getTodolist). 3. Callback в котром будем делать обновления
     dispatch(
       todolistApi.util.updateQueryData("getTodolists", undefined, state => {
