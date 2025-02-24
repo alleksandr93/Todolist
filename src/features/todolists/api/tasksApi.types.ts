@@ -6,12 +6,12 @@ export type GetTasksResponse = {
   items: DomainTask[]
 }
 export type UpdateTaskModel = {
-  title: string
+  title?: string
   description: string | null
   priority: TaskPriority
   startDate: string | null
   deadline: string | null
-  status: TaskStatus
+  status?: TaskStatus
 }
 // UpdateTaskDomainModel это такой же тип как и UpdateTaskModel,
 // только все свойства в нем являются необязательными

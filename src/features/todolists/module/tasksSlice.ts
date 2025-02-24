@@ -1,4 +1,4 @@
-import { type DomainTask, tasksApi, type UpdateTaskDomainModel, type UpdateTaskModel } from "../api"
+import { type DomainTask, _tasksApi, type UpdateTaskDomainModel, type UpdateTaskModel } from "../api"
 import { ResultCode } from "../lib/enums"
 import type { TasksStateType } from "../../../app/App"
 import type { AppThunk } from "../../../app/store"
@@ -59,7 +59,7 @@ export const fetchTasksTC =
   (id: string): AppThunk =>
   dispatch => {
     dispatch(setAppStatus({ status: "loading" }))
-    tasksApi
+    _tasksApi
       .getTasks(id)
       .then(res => {
         dispatch(setTasks({ todolistId: id, tasks: res.data.items }))
@@ -73,7 +73,7 @@ export const deleteTaskTC =
   (arg: { todolistId: string; taskId: string }): AppThunk =>
   dispatch => {
     dispatch(setAppStatus({ status: "loading" }))
-    tasksApi
+    _tasksApi
       .deleteTask(arg)
       .then(res => {
         if (res.data.resultCode === ResultCode.Success) {
@@ -91,7 +91,7 @@ export const addTaskTC =
   (arg: { todolistId: string; title: string }): AppThunk =>
   dispatch => {
     dispatch(setAppStatus({ status: "loading" }))
-    tasksApi
+    _tasksApi
       .createTask(arg)
       .then(res => {
         if (res.data.resultCode === ResultCode.Success) {
@@ -126,7 +126,7 @@ export const updateTaskTC =
         ...domainModel,
       }
       dispatch(setAppStatus({ status: "loading" }))
-      tasksApi
+      _tasksApi
         .updateTask({ taskId, todolistId, model })
         .then(res => {
           if (res.data.resultCode === ResultCode.Success) {

@@ -1,19 +1,42 @@
 import React from "react"
-import { EditableSpan } from "../../../../../../common/components/EditableSpan/EditableSpan"
+import { EditableSpan } from "common/components"
 import IconButton from "@mui/material/IconButton"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { type DomainTodolist } from "../../../../module/todolistsSlice"
 import styles from "./TodolistTitle.module.css"
-import { useDeleteTodolistMutation, useUpdateTodolistMutation } from "../../../../api"
+import { todolistApi, useDeleteTodolistMutation, useUpdateTodolistMutation } from "../../../../api"
+import { useAppDispatch } from "common/hooks"
+import type { RequestStatus } from "../../../../../../app/appSlice"
 
 type PropsType = {
   todolist: DomainTodolist
 }
 export const TodolistTitle = ({ todolist }: PropsType) => {
+  const dispatch = useAppDispatch()
   const [deleteTodolist] = useDeleteTodolistMutation()
   const [updateTodolist] = useUpdateTodolistMutation()
+
+  const updateQueryData = (status: RequestStatus) => {
+    dispatch(
+      todolistApi.util.updateQueryData("getTodolists", undefined, state => {
+        const todo = state.find(tl => tl.id === todolist.id)
+        if (todo) {
+          todo.entityStatus = status
+        }
+      }),
+    )
+  }
+
   const removeTodolist = () => {
-    deleteTodolist(todolist.id)
+    updateQueryData("loading")
+    deleteTodolist("todolist.id")
+      .unwrap()
+      .then(res => {
+        updateQueryData("idle")
+      })
+      .catch(err => {
+        updateQueryData("failed")
+      })
   }
   const updateTodolistHandler = (title: string) => {
     updateTodolist({ id: todolist.id, title })

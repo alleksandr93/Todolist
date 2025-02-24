@@ -23,6 +23,8 @@ import { useLogoutMutation } from "../../../features/auth/api/authApi"
 import { ResultCode } from "../../../features/todolists/lib/enums"
 import { clearTasks } from "../../../features/todolists/module/tasksSlice"
 import { clearTodolist } from "../../../features/todolists/module/todolistsSlice"
+import { todolistApi } from "../../../features/todolists/api"
+import { baseApi } from "../../../app/baseApi"
 
 export const Header = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
@@ -40,8 +42,8 @@ export const Header = () => {
     logout().then(res => {
       if (res.data?.resultCode === ResultCode.Success) {
         dispatch(setIsLoggedIn({ isLoggedIn: false }))
-        dispatch(clearTasks())
-        dispatch(clearTodolist())
+        // Для зачистки кеша
+        dispatch(baseApi.util.resetApiState())
         // удаляем токен в локал стордж
         localStorage.removeItem("sn-token")
       }

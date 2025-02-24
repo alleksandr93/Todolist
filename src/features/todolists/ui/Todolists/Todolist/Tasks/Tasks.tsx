@@ -1,31 +1,43 @@
-import React, { useEffect } from "react"
+import React from "react"
 import List from "@mui/material/List"
-import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
 import { Task } from "./Task/Task"
 import { TaskStatus } from "../../../../lib/enums"
 import type { DomainTodolist } from "../../../../module/todolistsSlice"
-import { fetchTasksTC, selectTasks } from "../../../../module/tasksSlice"
 import { useAppDispatch } from "common/hooks"
+import { useGetTasksQuery } from "../../../../api"
+import { TasksSkeleton } from "../../../skeletons/TasksSkeleton/TasksSkeleton"
+import { setAppError } from "../../../../../../app/appSlice"
 
 type PropsType = {
   todolist: DomainTodolist
 }
 export const Tasks = ({ todolist }: PropsType) => {
+  const { data: tasks, isLoading, isError, error } = useGetTasksQuery(todolist.id)
+  console.log({ isError, error })
   const dispatch = useAppDispatch()
-  useEffect(() => {
-    dispatch(fetchTasksTC(todolist.id))
-  }, [])
+  const allTasks = tasks?.items
 
-  const tasks = useAppSelector(selectTasks)
-  const allTasks = tasks[todolist.id]
   let tasksForTodolist = allTasks
+
   if (todolist.filter === "active") {
-    tasksForTodolist = allTasks.filter(task => task.status === TaskStatus.New)
+    tasksForTodolist = allTasks?.filter(task => task.status === TaskStatus.New)
   }
   if (todolist.filter === "completed") {
-    tasksForTodolist = allTasks.filter(task => task.status === TaskStatus.Completed)
+    tasksForTodolist = allTasks?.filter(task => task.status === TaskStatus.Completed)
   }
-
+  if (isLoading) {
+    return <TasksSkeleton />
+  }
+  // if (error) {
+  //   if ("status" in error) {
+  //     //fetchBaseQueryError
+  //     const errorMsg = "error" in error ? error.error : JSON.stringify(error.data)
+  //     dispatch(setAppError({ error: errorMsg }))
+  //   } else {
+  //     //SerializedError
+  //     dispatch(setAppError({ error: error.message ? error.message : "Some error" }))
+  //   }
+  // }
   return (
     <>
       {tasksForTodolist && tasksForTodolist.length === 0 ? (

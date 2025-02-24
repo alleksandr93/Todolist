@@ -3,11 +3,9 @@ import ListItem from "@mui/material/ListItem"
 import Checkbox from "@mui/material/Checkbox"
 import IconButton from "@mui/material/IconButton"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { deleteTaskTC, updateTaskTC } from "../../../../../module/tasksSlice"
 import { getListItemSx } from "./Task.styles"
-import { useAppDispatch } from "common/hooks"
 import { EditableSpan } from "common/components"
-import type { DomainTask } from "../../../../../api"
+import { type DomainTask, type UpdateTaskModel, useDeleteTaskMutation, useUpdateTaskMutation } from "../../../../../api"
 import { TaskStatus } from "../../../../../lib/enums"
 
 type PropsType = {
@@ -16,17 +14,26 @@ type PropsType = {
   disabled: boolean
 }
 export const Task = ({ task, todolistId, disabled }: PropsType) => {
-  const dispatch = useAppDispatch()
+  const [deleteTask] = useDeleteTaskMutation()
+  const [updateTask] = useUpdateTaskMutation()
+
   const removeTaskHandler = () => {
-    dispatch(deleteTaskTC({ todolistId: todolistId, taskId: task.id }))
+    deleteTask({ todolistId: todolistId, taskId: task.id })
+  }
+  const model: UpdateTaskModel = {
+    status: task.status,
+    title: task.title,
+    deadline: task.deadline,
+    description: task.description,
+    priority: task.priority,
+    startDate: task.startDate,
   }
   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-
-    dispatch(updateTaskTC({ todolistId, taskId: task.id, domainModel: { status } }))
+    updateTask({ todolistId, taskId: task.id, model: { ...model, status } })
   }
   const updateTaskHandler = (newTitle: string) => {
-    dispatch(updateTaskTC({ todolistId, taskId: task.id, domainModel: { title: newTitle } }))
+    updateTask({ todolistId, taskId: task.id, model: { ...model, title: newTitle } })
   }
   return (
     <ListItem
@@ -37,7 +44,6 @@ export const Task = ({ task, todolistId, disabled }: PropsType) => {
       <div>
         <Checkbox
           disabled={disabled}
-          defaultChecked
           checked={task.status === TaskStatus.Completed}
           onChange={changeTaskStatusHandler}
         />
