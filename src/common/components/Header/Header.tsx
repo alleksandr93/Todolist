@@ -42,18 +42,13 @@ export const Header = () => {
     <Box sx={{ flexGrow: 1, marginBottom: "80px" }}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}></Typography>
           {isLoggedIn && (
             <MenuButton onClick={logoutHandler} color="inherit">
               Logout
             </MenuButton>
           )}
-          <MenuButton color="inherit">FAQ</MenuButton>
+          {/*<MenuButton color="inherit">FAQ</MenuButton>*/}
           <Switch defaultChecked={themeMode === "dark"} onClick={changeModeHandler} />
         </Toolbar>
         {status === "loading" && <LinearProgress />}

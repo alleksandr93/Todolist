@@ -23,17 +23,8 @@ export const TodolistTitle = ({ todolist }: PropsType) => {
   return (
     <div className={styles.container}>
       <h3>
-        <EditableSpan
-          value={todolist.title}
-          onChange={updateTodolistHandler}
-          disabled={todolist.entityStatus === "loading"}
-        />
-        <IconButton
-          disabled={todolist.entityStatus === "loading"}
-          aria-label="delete"
-          size="small"
-          onClick={removeTodolist}
-        >
+        <EditableSpan value={todolist.title} onChange={updateTodolistHandler} />
+        <IconButton aria-label="delete" size="small" onClick={removeTodolist}>
           <DeleteIcon fontSize="inherit" />
         </IconButton>
       </h3>

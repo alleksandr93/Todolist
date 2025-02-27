@@ -12,9 +12,8 @@ import { createTaskModel } from "../../../../../lib/utils/createTaskModel"
 type PropsType = {
   task: DomainTask
   todolistId: string
-  disabled: boolean
 }
-export const Task = ({ task, todolistId, disabled }: PropsType) => {
+export const Task = ({ task, todolistId }: PropsType) => {
   const [deleteTask] = useDeleteTaskMutation()
   const [updateTask] = useUpdateTaskMutation()
 
@@ -45,14 +44,10 @@ export const Task = ({ task, todolistId, disabled }: PropsType) => {
       className={task.status === TaskStatus.Completed ? "is-done" : ""}
     >
       <div>
-        <Checkbox
-          disabled={disabled}
-          checked={task.status === TaskStatus.Completed}
-          onChange={changeTaskStatusHandler}
-        />
-        <EditableSpan value={task.title} onChange={newTitle => updateTaskHandler(newTitle)} disabled={disabled} />
+        <Checkbox checked={task.status === TaskStatus.Completed} onChange={changeTaskStatusHandler} />
+        <EditableSpan value={task.title} onChange={newTitle => updateTaskHandler(newTitle)} />
       </div>
-      <IconButton disabled={disabled} aria-label="delete" size="small" onClick={removeTaskHandler}>
+      <IconButton aria-label="delete" size="small" onClick={removeTaskHandler}>
         <DeleteIcon fontSize="inherit" />
       </IconButton>
     </ListItem>

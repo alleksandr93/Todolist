@@ -35,10 +35,7 @@ export const Tasks = ({ todolist }: PropsType) => {
       ) : (
         <>
           <List>
-            {tasksForTodolist &&
-              tasksForTodolist.map(t => (
-                <Task key={t.id} task={t} todolistId={todolist.id} disabled={todolist.entityStatus === "loading"} />
-              ))}
+            {tasksForTodolist && tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={todolist.id} />)}
           </List>
           {PAGE_SIZE < (tasks?.totalCount || 0) && (
             <TasksPagination totalCount={tasks?.totalCount || 0} page={page} setPage={setPage} />
