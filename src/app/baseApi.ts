@@ -5,6 +5,7 @@ export const baseApi = createApi({
   reducerPath: "todolistApi",
   baseQuery: async (args, api, extraOptions) => {
     // await new Promise(resolve => setTimeout(resolve, 2000)) // эмуляуия задержки
+
     const result = await fetchBaseQuery({
       baseUrl: process.env.REACT_APP_BASE_URL,
       prepareHeaders: headers => {
@@ -18,4 +19,8 @@ export const baseApi = createApi({
   },
   endpoints: () => ({}),
   tagTypes: ["Todolist", "Task"],
+  // 5 минут живут данные кеша потом удаляються (300 сек)
+  keepUnusedDataFor: 300,
+  // обновляет данные когда после прерывания соединения с интренетом он подгрузит данные
+  refetchOnReconnect: true,
 })

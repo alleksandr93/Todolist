@@ -34,6 +34,7 @@ export const Login = () => {
     formState: { errors },
   } = useForm<Inputs>({ defaultValues: { email: "", password: "", rememberMe: false, captcha: true } })
   const onSubmit: SubmitHandler<Inputs> = data => {
+    console.log(data)
     login(data)
       .then(res => {
         if (res.data?.resultCode === ResultCode.Success) {

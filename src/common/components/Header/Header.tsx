@@ -21,14 +21,13 @@ export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const status = useAppSelector(selectStatus)
   const dispatch = useAppDispatch()
-  const theme = getTheme(themeMode)
   const [logout] = useLogoutMutation()
+
   const changeModeHandler = () => {
     dispatch(changeTheme({ theme: themeMode === "light" ? "dark" : "light" }))
     localStorage.setItem("sn-theme", themeMode === "light" ? "dark" : "light")
   }
   const logoutHandler = () => {
-    console.log(21313)
     logout().then(res => {
       if (res.data?.resultCode === ResultCode.Success) {
         dispatch(setIsLoggedIn({ isLoggedIn: false }))
@@ -46,7 +45,7 @@ export const Header = () => {
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
           {isLoggedIn && (

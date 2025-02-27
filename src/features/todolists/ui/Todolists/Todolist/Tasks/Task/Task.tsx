@@ -7,6 +7,7 @@ import { getListItemSx } from "./Task.styles"
 import { EditableSpan } from "common/components"
 import { type DomainTask, type UpdateTaskModel, useDeleteTaskMutation, useUpdateTaskMutation } from "../../../../../api"
 import { TaskStatus } from "../../../../../lib/enums"
+import { createTaskModel } from "../../../../../lib/utils/createTaskModel"
 
 type PropsType = {
   task: DomainTask
@@ -30,10 +31,12 @@ export const Task = ({ task, todolistId, disabled }: PropsType) => {
   }
   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-    updateTask({ todolistId, taskId: task.id, model: { ...model, status } })
+    const model = createTaskModel(task, { status })
+    updateTask({ todolistId, taskId: task.id, model })
   }
   const updateTaskHandler = (newTitle: string) => {
-    updateTask({ todolistId, taskId: task.id, model: { ...model, title: newTitle } })
+    const model = createTaskModel(task, { title: newTitle })
+    updateTask({ todolistId, taskId: task.id, model })
   }
   return (
     <ListItem

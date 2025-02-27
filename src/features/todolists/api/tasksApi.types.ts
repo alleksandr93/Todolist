@@ -6,12 +6,12 @@ export type GetTasksResponse = {
   items: DomainTask[]
 }
 export type UpdateTaskModel = {
-  title?: string
+  title: string
   description: string | null
+  status: TaskStatus
   priority: TaskPriority
   startDate: string | null
-  deadline: string | null
-  status?: TaskStatus
+  deadline: string
 }
 
 export type DomainTask = {
